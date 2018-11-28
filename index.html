@@ -1,0 +1,1855 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="author" content="Mateusz Kapeluszny">
+
+        <title>Intro to GraphQL</title>
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css">
+        <link rel="stylesheet" href="assets/custom.css">
+        <link rel="stylesheet" href="assets/prismjs/prism.css">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/atom-one-light.css">
+
+        <script src="assets/offline/fonts.js"></script>
+        <script src="assets/prismjs/prism.js"></script>
+
+        <script src="https://use.typekit.net/jor2kyz.js"></script>
+        <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-background="#384359" class="first-slide">
+                    <img src="assets/img/graphql-white.svg" class="logo-image"/>
+
+                    <p style="text-align: center" class="title-font">
+                        Intro to <strong>GraphQL</strong>
+                    </p>
+
+                    <p style="font-size: 70%; opacity: 0.5" class="normal-font">
+                        by Mateusz Kapeluszny
+                    </p>
+                </section>
+
+                <section class="section">
+                    <h2>History of GraphQL</h2>
+                    <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="1">
+                        <div style="display: grid; grid-template-rows: 300px 100px 100px">
+                            <div style="position: relative;height: 300px;">
+                            </div>
+                            <div>
+                                <img width="100%" src="assets/svg/timeline/pinktimeline1.svg" alt="">
+                            </div>
+                            <div style="position: relative;height: 100px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="2">
+                        <div style="display: grid; grid-template-rows: 300px 100px 100px">
+                            <div style="position: relative;height: 300px;">
+                                <span style="position: absolute;left: 0;bottom: 20px; font-weight: 800;">Prototype</span>
+                            </div>
+                            <div>
+                                <img width="100%" src="assets/svg/timeline/prototype.svg" alt="">
+                            </div>
+                            <div style="position: relative;height: 100px;">
+                                <span style="position: absolute;left: 0;top: 20px;">Feb 2012</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="3">
+                        <div style="display: grid; grid-template-rows: 300px 100px 100px">
+                            <div style="position: relative;height: 300px;">
+                                <span style="position: absolute;left: 4%;bottom: 20px; font-weight: 800;">
+                                    Initial<br/>
+                                    Development
+                                </span>
+                            </div>
+                            <div>
+                                <img width="100%" src="assets/svg/timeline/initial-development.svg" alt="">
+                            </div>
+                            <div style="position: relative;height: 100px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="4">
+                        <div style="display: grid; grid-template-rows: 300px 100px 100px">
+                            <div style="position: relative;height: 300px;">
+                                <span style="position: absolute;left: 11%;bottom: 20px; font-weight: 800;">Production Use</span>
+                            </div>
+                            <div>
+                                <img width="100%" src="assets/svg/timeline/production-use.svg" alt="">
+                            </div>
+                            <div style="position: relative;height: 100px;">
+                                <span style="position: absolute;left: 15%;top: 20px;">Aug 2012</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="5">
+                        <div style="display: grid; grid-template-rows: 300px 100px 100px">
+                            <div style="position: relative;height: 300px;">
+                                <span style="position: absolute;left: 30%;bottom: 20px; font-weight: 800;">
+                                    Evolution
+                                </span>
+                            </div>
+                            <div>
+                                <img width="100%" src="assets/svg/timeline/evolution.svg" alt="">
+                            </div>
+                            <div style="position: relative;height: 100px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="6">
+                        <div style="display: grid; grid-template-rows: 300px 100px 100px">
+                            <div style="position: relative;height: 300px;">
+                                <span style="position: absolute;left: 41%;bottom: 20px; font-weight: 800;">
+                                    Discussed Publicly
+                                </span>
+                            </div>
+                            <div>
+                                <img width="100%" src="assets/svg/timeline/discussed-publicly.svg" alt="">
+                            </div>
+                            <div style="position: relative;height: 100px;">
+                                <span style="position: absolute;left: 47%;top: 20px;">Jan 2015</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="7">
+                        <div style="display: grid; grid-template-rows: 300px 100px 100px">
+                            <div style="position: relative;height: 300px;">
+                                <span style="position: absolute;left: 55%;bottom: 20px; font-weight: 800;">
+                                    Redesign
+                                </span>
+                            </div>
+                            <div>
+                                <img width="100%" src="assets/svg/timeline/redesign.svg" alt="">
+                            </div>
+                            <div style="position: relative;height: 100px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="8">
+                        <div style="display: grid; grid-template-rows: 300px 100px 100px">
+                            <div style="position: relative;height: 300px;">
+                                <span style="position: absolute;left: 60%;bottom: 20px; font-weight: 800;">
+                                    Open source
+                                </span>
+                            </div>
+                            <div>
+                                <img width="100%" src="assets/svg/timeline/open-source.svg" alt="">
+                            </div>
+                            <div style="position: relative;height: 100px;">
+                                <span style="position: absolute;left: 62%;top: 20px;">July 2015</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="9">
+                        <div style="display: grid; grid-template-rows: 300px 100px 100px">
+                            <div style="position: relative;height: 300px;">
+                                <span style="position: absolute;left: 70%;bottom: 20px; font-weight: 800;">
+                                    Until Now & Future
+                                </span>
+                            </div>
+                            <div>
+                                <img width="100%" src="assets/svg/timeline/now-future.svg" alt="">
+                            </div>
+                            <div style="position: relative;height: 100px;">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </section>
+
+                <section class="section">
+                    <h2>Reusable Endpoints</h2>
+                    <div style="display: grid; grid-template-columns: 50% 80%">
+                        <div>
+                            <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="0">
+                                <svg viewBox="0 0 400 460" version="1.1" preserveAspectRatio="xMidYMid meet"><rect clip-path="url(#tru55cy2ot8)" x="0" y="0" width="400" height="460" style="fill: url(&quot;#us4qgj75j61&quot;);"></rect><defs><clipPath id="tru55cy2ot8"><rect x="81" y="35" rx="4" ry="4" width="117" height="6.4"></rect><rect x="81" y="55" rx="3" ry="3" width="85" height="6.4"></rect><rect x="11" y="100" rx="3" ry="3" width="350" height="6.4"></rect><rect x="11" y="120" rx="3" ry="3" width="380" height="6.4"></rect><rect x="11" y="140" rx="3" ry="3" width="201" height="6.4"></rect><circle cx="41" cy="50" r="30"></circle></clipPath><linearGradient id="us4qgj75j61"><stop offset="-1.97536" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-2; 1" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="-1.47536" stop-color="#808795" stop-opacity="1"><animate attributeName="offset" values="-1.5; 1.5" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="-0.975361" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-1; 2" dur="2s" repeatCount="indefinite"></animate></stop></linearGradient></defs></svg>
+                            </div>
+                            <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="1">
+                                <svg viewBox="0 0 400 460" version="1.1" preserveAspectRatio="xMidYMid meet"><rect clip-path="url(#tru55cy2ot9)" x="0" y="0" width="400" height="460" style="fill: url(&quot;#us4qgj75j6q&quot;);"></rect><defs><clipPath id="tru55cy2ot9"><rect x="81" y="35" rx="4" ry="4" width="117" height="6.4"></rect><rect x="81" y="55" rx="3" ry="3" width="85" height="6.4"></rect><rect x="11" y="100" rx="3" ry="3" width="350" height="6.4"></rect><rect x="11" y="120" rx="3" ry="3" width="380" height="6.4"></rect><rect x="11" y="140" rx="3" ry="3" width="201" height="6.4"></rect><circle cx="41" cy="50" r="30"></circle></clipPath><linearGradient id="us4qgj75j6q"><stop offset="-1.97536" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-2; 1" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="-1.47536" stop-color="#808795" stop-opacity="1"><animate attributeName="offset" values="-1.5; 1.5" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="-0.975361" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-1; 2" dur="2s" repeatCount="indefinite"></animate></stop></linearGradient></defs></svg>
+                            </div>
+                            <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="2">
+                                <svg viewBox="0 0 400 460" version="1.1" preserveAspectRatio="xMidYMid meet"><rect clip-path="url(#wvk576j5m0d)" x="0" y="0" width="400" height="460" style="fill: url(&quot;#o7lg7anwtqp&quot;);"></rect><defs><clipPath id="wvk576j5m0d"><rect x="81" y="35" rx="4" ry="4" width="117" height="6.4"></rect><rect x="81" y="55" rx="3" ry="3" width="85" height="6.4"></rect><rect x="11" y="100" rx="3" ry="3" width="350" height="6.4"></rect><rect x="11" y="120" rx="3" ry="3" width="380" height="6.4"></rect><rect x="11" y="140" rx="3" ry="3" width="201" height="6.4"></rect><circle cx="41" cy="50" r="30"></circle><circle cx="30.295630140987" cy="171.49563014098698" r="10.295630140987"></circle><rect x="62" y="164.2" rx="0" ry="0" width="274" height="13.94"></rect><circle cx="31.301025271221157" cy="198.44102527122118" r="10.26102527122116"></circle><rect x="62" y="193.2" rx="0" ry="0" width="274" height="13.94"></rect><circle cx="31.312712210513325" cy="230.6127122105133" r="10.262712210513326"></circle><rect x="62" y="222.2" rx="0" ry="0" width="274" height="13.94"></rect></clipPath><linearGradient id="o7lg7anwtqp"><stop offset="-0.75101" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-2; 1" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="-0.25101" stop-color="#808795" stop-opacity="1"><animate attributeName="offset" values="-1.5; 1.5" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="0.24899" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-1; 2" dur="2s" repeatCount="indefinite"></animate></stop></linearGradient></defs></svg>
+                            </div>
+                            <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="3">
+                                <svg viewBox="0 0 400 460" version="1.1" preserveAspectRatio="xMidYMid meet"><rect clip-path="url(#mvxw9uotkqq)" x="0" y="0" width="400" height="460" style="fill: url(&quot;#o12hsbd20km&quot;);"></rect><defs><clipPath id="mvxw9uotkqq"><rect x="81" y="35" rx="4" ry="4" width="117" height="6.4"></rect><rect x="81" y="55" rx="3" ry="3" width="85" height="6.4"></rect><rect x="11" y="100" rx="3" ry="3" width="350" height="6.4"></rect><rect x="11" y="120" rx="3" ry="3" width="380" height="6.4"></rect><rect x="11" y="140" rx="3" ry="3" width="201" height="6.4"></rect><circle cx="41" cy="50" r="30"></circle><circle cx="30.295630140987" cy="171.49563014098698" r="10.295630140987"></circle><rect x="62" y="164.2" rx="0" ry="0" width="274" height="13.94"></rect><circle cx="31.301025271221157" cy="198.44102527122118" r="10.26102527122116"></circle><rect x="62" y="193.2" rx="0" ry="0" width="274" height="13.94"></rect><circle cx="31.312712210513325" cy="230.6127122105133" r="10.262712210513326"></circle><rect x="62" y="222.2" rx="0" ry="0" width="274" height="13.94"></rect><rect x="11" y="258.2" rx="0" ry="0" width="382" height="68"></rect></clipPath><linearGradient id="o12hsbd20km"><stop offset="-1.80073" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-2; 1" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="-1.30073" stop-color="#808795" stop-opacity="1"><animate attributeName="offset" values="-1.5; 1.5" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="-0.800728" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-1; 2" dur="2s" repeatCount="indefinite"></animate></stop></linearGradient></defs></svg>
+                            </div>
+                            <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="4">
+                                <svg viewBox="0 0 400 460" version="1.1" preserveAspectRatio="xMidYMid meet"><rect clip-path="url(#f2g2z71ca2p)" x="0" y="0" width="400" height="460" style="fill: url(&quot;#mkjx8thr2rq&quot;);"></rect><defs><clipPath id="f2g2z71ca2p"><rect x="81" y="35" rx="4" ry="4" width="117" height="6.4"></rect><rect x="81" y="55" rx="3" ry="3" width="85" height="6.4"></rect><rect x="11" y="100" rx="3" ry="3" width="350" height="6.4"></rect><rect x="11" y="120" rx="3" ry="3" width="380" height="6.4"></rect><rect x="11" y="140" rx="3" ry="3" width="201" height="6.4"></rect><circle cx="41" cy="50" r="30"></circle><circle cx="30.295630140987" cy="171.49563014098698" r="10.295630140987"></circle><rect x="62" y="164.2" rx="0" ry="0" width="274" height="13.94"></rect><circle cx="31.301025271221157" cy="198.44102527122118" r="10.26102527122116"></circle><rect x="62" y="193.2" rx="0" ry="0" width="274" height="13.94"></rect><circle cx="31.312712210513325" cy="230.6127122105133" r="10.262712210513326"></circle><rect x="62" y="222.2" rx="0" ry="0" width="274" height="13.94"></rect><rect x="11" y="258.2" rx="0" ry="0" width="382" height="68"></rect><rect x="11" y="343.58" rx="3" ry="3" width="68" height="11.46"></rect><rect x="90" y="343.58" rx="3" ry="3" width="68" height="11.46"></rect><rect x="165" y="343.58" rx="3" ry="3" width="68" height="11.46"></rect><rect x="243" y="343.58" rx="3" ry="3" width="68" height="11.46"></rect></clipPath><linearGradient id="mkjx8thr2rq"><stop offset="0.899404" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-2; 1" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="1.3994" stop-color="#808795" stop-opacity="1"><animate attributeName="offset" values="-1.5; 1.5" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="1.8994" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-1; 2" dur="2s" repeatCount="indefinite"></animate></stop></linearGradient></defs></svg>
+                            </div>
+                            <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="5">
+                                <svg viewBox="0 0 400 460" version="1.1" preserveAspectRatio="xMidYMid meet"><rect clip-path="url(#kv3u6maulqi)" x="0" y="0" width="400" height="460" style="fill: url(&quot;#h4qak5s067t&quot;);"></rect><defs><clipPath id="kv3u6maulqi"><rect x="81" y="35" rx="4" ry="4" width="117" height="6.4"></rect><rect x="81" y="55" rx="3" ry="3" width="85" height="6.4"></rect><rect x="11" y="100" rx="3" ry="3" width="350" height="6.4"></rect><rect x="11" y="120" rx="3" ry="3" width="380" height="6.4"></rect><rect x="11" y="140" rx="3" ry="3" width="201" height="6.4"></rect><circle cx="41" cy="50" r="30"></circle><circle cx="30.295630140987" cy="171.49563014098698" r="10.295630140987"></circle><rect x="62" y="164.2" rx="0" ry="0" width="274" height="13.94"></rect><circle cx="31.301025271221157" cy="198.44102527122118" r="10.26102527122116"></circle><rect x="62" y="193.2" rx="0" ry="0" width="274" height="13.94"></rect><circle cx="31.312712210513325" cy="230.6127122105133" r="10.262712210513326"></circle><rect x="62" y="222.2" rx="0" ry="0" width="274" height="13.94"></rect><rect x="327" y="19.2" rx="0" ry="0" width="63" height="23"></rect><rect x="249" y="19.2" rx="0" ry="0" width="63" height="23"></rect><rect x="11" y="258.2" rx="0" ry="0" width="382" height="68"></rect><rect x="11" y="343.58" rx="3" ry="3" width="68" height="11.46"></rect><rect x="90" y="343.58" rx="3" ry="3" width="68" height="11.46"></rect><rect x="165" y="343.58" rx="3" ry="3" width="68" height="11.46"></rect><rect x="243" y="343.58" rx="3" ry="3" width="68" height="11.46"></rect></clipPath><linearGradient id="h4qak5s067t"><stop offset="-0.860291" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-2; 1" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="-0.360291" stop-color="#808795" stop-opacity="1"><animate attributeName="offset" values="-1.5; 1.5" dur="2s" repeatCount="indefinite"></animate></stop><stop offset="0.139709" stop-color="#384359" stop-opacity="1"><animate attributeName="offset" values="-1; 2" dur="2s" repeatCount="indefinite"></animate></stop></linearGradient></defs></svg>
+                            </div>
+                        </div>
+                        <div>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="1">
+                                <code data-trim contenteditable class="language-http">
+                                    /posts/:id
+                                    /users/:id
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="1">
+                                <code data-trim contenteditable class="language-graphql">
+                                    /posts/:id/with_users
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="2">
+                                <code data-trim contenteditable class="language-graphql">
+                                    /posts/:id
+                                    /users/:id
+                                    /comments/:id
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="2">
+                                <code data-trim contenteditable class="language-graphql">
+                                    /posts/:id/with_users
+                                    /posts/:id/with_users_comments
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="3">
+                                <code data-trim contenteditable class="language-graphql">
+                                    /posts/:id
+                                    /users/:id
+                                    /comments/:id
+                                    /posts_images/:id
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="3">
+                                <code data-trim contenteditable class="language-graphql">
+                                    /posts/:id/with_users
+                                    /posts/:id/with_users_comments
+                                    /posts/:id/with_users_comments_and_images
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="4">
+                                <code data-trim contenteditable class="language-graphql">
+                                    /posts/:id
+                                    /users/:id
+                                    /comments/:id
+                                    /posts_images/:id
+                                    /tags/:id
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="4">
+                                <code data-trim contenteditable class="language-graphql">
+                                    /posts/:id/with_users
+                                    /posts/:id/with_users_comments
+                                    /posts/:id/with_users_comments_and_images
+                                    /posts/:id/with_users_comments_and_images_and_tags
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="5">
+                                <code data-trim contenteditable class="language-graphql">
+                                    /posts/:id
+                                    /users/:id
+                                    /comments/:id
+                                    /posts_images/:id
+                                    /tags/:id
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="5">
+                                <code data-trim contenteditable class="language-graphql">
+                                    /posts/:id/with_users
+                                    /posts/:id/with_users_comments
+                                    /posts/:id/with_users_comments_and_images
+                                    /posts/:id/with_users_comments_and_images_and_tags
+                                    /posts/:id/with_users_comments_and_images_and_tags_and_bla
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Overfetching</h2>
+
+                    <div>
+                        <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="1">
+                            <img width="100%" src="assets/svg/rest-api/restapi1.svg" alt="">
+                        </div>
+                        <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="2">
+                            <img width="100%" src="assets/svg/rest-api/restapi2.svg" alt="">
+                        </div>
+                        <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="3">
+                            <img width="100%" src="assets/svg/rest-api/restapi3.svg" alt="">
+                        </div>
+                        <div class="fragment fade-in step-fade-in-then-out" data-fragment-index="4">
+                            <img width="100%" src="assets/svg/rest-api/restapi4.svg" alt="">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" data-background-size="contain" data-background="assets/svg/schemat2.svg">
+                <pre style="line-height: 0.38em; margin: -25px 0 0 0;top: 0;left: 0;display: block;">
+<code style="overflow: hidden;" class="fragment fade-in" data-fragment-index="1">
+/users/:id/friends
+</code>
+<code style="overflow: hidden;" class="fragment fade-in" data-fragment-index="2">
+/users/:friendId/companies x3
+</code>
+<code style="overflow: hidden;" class="fragment fade-in" data-fragment-index="3">
+/users/:friendId/departments x3
+</code>
+<code style="overflow: hidden; margin-top: 15px" class="fragment fade-in" data-fragment-index="4">
+/users/:id/friends_with_companies_and_departments
+</code>
+                </pre>
+                </section>
+
+                <section class="section" data-background-size="contain" data-background="assets/svg/schemat1.svg">
+                            <pre style="margin: -25px 0 0 0;top: 0;left: 0;display: block;">
+<code data-trim contenteditable class="language-graphql">
+query {
+  user(id: 23) {
+    name
+    friends {
+      name
+      company {
+        name
+      }
+      department {
+        name
+      }
+    }
+  }
+}
+</code>
+                        </pre>
+                </section>
+
+                <section class="section">
+                    <h2>Thinking in a graph</h2>
+                    <div>
+                        <blockquote style="box-shadow: none" class="fragment step-fade-in-then-out" data-fragment-index="1"><span>
+</span><p><span>“Think in graphs, not endpoints.” </span><a href="http://www.graphql.com/articles/4-years-of-graphql-lee-byron" target="_blank"><span>Lessons From 4 Years of GraphQL</span></a><span> by </span><a href="https://twitter.com/leeb" target="_blank"><span>Lee Byron</span></a><span>, GraphQL Co-Inventor.</span></p><span>
+</span></blockquote>
+                        <img class="fragment step-fade-in-then-out" src="assets/svg/sad.svg" data-fragment-index="2">
+                        <img class="fragment step-fade-in-then-out" src="assets/svg/happy.svg" data-fragment-index="3">
+                    </div>
+                </section>
+
+                <section>
+                    <h2>One Endpoint to rule them all</h2>
+                    <h2 style="display: inline; font-weight: 800">POST</h2> <h2 style="display: inline; color: #565459">/graphql</h2>
+                </section>
+
+                <section class="section">
+                    <h2>Schema Definition</h2>
+
+                    <div style="text-align: center; display: grid; grid-template-columns: 60% 60%">
+                        <div class="fade-in">
+                            <h4>GraphQLSchema</h4>
+                            <pre>
+                                    <code data-trim contenteditable class="language-javascript">
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: {
+      user: {
+        type: UserType,
+        args: {
+          id: { type: GraphQLID }
+        },
+        resolve: (root, args, context, info) => {
+          const { id } = args      // the `id` argument for this field is declared above
+          return fetchUserById(id) // hit the database
+        }
+      }
+    }
+  })
+})
+                                    </code>
+                                </pre>
+                        </div>
+                        <div class="fragment fade-in" data-fragment-index="2">
+                            <h4>SDL</h4>
+                            <pre>
+                                    <code data-trim contenteditable class="language-javascript">
+const typeDefs = `
+type Query {
+  user(id: ID!): User
+}
+type User {
+  id: ID!
+  name: String
+}`
+
+const resolvers = {
+  Query: {
+    user: (root, args, context, info) => {
+      return fetchUserById(args.id)
+    }
+  },
+}
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers
+})
+                                    </code>
+                                </pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Type System</h2>
+
+                    <div style="display: grid; grid-template-columns: 50% 50%">
+                        <div>
+                            <pre><code data-trim contenteditable class="language-graphql">
+type Picture {
+  keyword : Int!
+  width: Int!
+  height: Int!
+  url: String
+}
+          </code></pre>
+
+                            <pre class="fragment fade-in" data-fragment-index="1"><code data-trim contenteditable class="language-graphql">
+interface Identifiable {
+  id: String!
+}
+          </code></pre>
+                            <pre class="fragment fade-in" data-fragment-index="2"><code data-trim contenteditable class="language-graphql">
+enum SizeEnum {
+  LARGE
+  MEDIUM
+  SMALL
+}
+                    </code></pre>
+
+                            <pre class="fragment fade-in" data-fragment-index="3"><code data-trim contenteditable class="language-graphql">
+type User implements Identifiable {
+  id: ID!
+  firstName: String!
+  age: String
+  picture(size: SizeEnum): Picture
+}
+          </code>
+                    </pre>
+                        </div>
+                        <div>
+                    <pre class="fragment fade-in" data-fragment-index="4"><code data-trim contenteditable class="language-graphql">
+type Query {
+  users(olderThan: Int = -1): [User!]!
+  user(id: ID!): User
+  pictures: [Picture]
+}
+
+type Mutation {
+  createUser(firstName: String!): User!
+}
+
+type Subscription {
+  userAdded: User!
+}
+
+          </code></pre>
+                            <pre class="fragment fade-in" data-fragment-index="5"><code data-trim contenteditable class="language-graphql">
+type Adult {
+  name: String!
+  work: String!
+}
+
+type Child {
+  name: String!
+  school: String!
+}
+
+union Person = Adult | Child
+          </code></pre>
+                        </div>
+                    </div>
+
+                </section>
+
+                <section class="section">
+                    <h2>Queries</h2>
+
+                    <div style="text-align: center; display: grid; grid-template-columns: 60% 60%">
+                        <div class="fade-in">
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="1">
+                            <div>
+{
+  me {
+    firstName
+    lastName
+  }
+}
+                            </div>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="2">
+                            <div>
+{
+  me {
+    firstName
+    lastName
+  }
+}
+                            </div>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="3">
+                            <div>
+<span class="hljs-comment">{</span>
+  me <span class="hljs-comment">{
+    firstName
+    lastName
+  }
+}
+</span>
+                            </div>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="4">
+                            <div>
+<span class="hljs-comment">{</span>
+  me <span class="hljs-comment">{
+    firstName
+    lastName
+  }
+}
+</span>
+                            </div>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="5">
+                            <div>
+<span class="hljs-comment">{</span>
+  user(id: 44) <span class="hljs-comment">{
+    firstName
+    lastName
+  }
+}
+</span>
+                            </div>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="6">
+                            <div>
+{
+  user(id: 44) {
+    firstName
+    lastName
+    company {
+      name
+      department
+    }
+    friends {
+      firstName
+      age
+    }
+  }
+}
+                                </span>
+                            </div>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="7">
+                            <div>
+<span class="hljs-comment">{
+  user(id: 44) {</span>
+    firstName
+    lastName
+    company <span class="hljs-comment">{
+      name
+      department
+    }</span>
+    friends <span class="hljs-comment">{
+      firstName
+      age
+    }</span>
+  }
+}
+
+                            </div>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="8">
+                            <div>
+<span class="hljs-comment">{
+  user(id: 44) {</span>
+    firstName
+    lastName
+    company <span class="hljs-comment">{
+      name
+      department
+    }</span>
+    friends <span class="hljs-comment">{
+      firstName
+      age
+    }</span>
+  }
+}
+
+                            </div>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="9">
+                            <div>
+{
+  user(id: 44) {
+    firstName
+    lastName
+    company {
+      name
+      department
+    }
+    friends {
+      firstName
+      age
+    }
+  }
+}
+                                </span>
+                            </div>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="10">
+                            <div>
+{
+  user(id: 44) {
+    firstName
+    lastName
+    company {
+      name
+      department
+    }
+    friends(limit: 1) {
+      firstName
+      age
+    }
+  }
+}
+                                </span>
+                            </div>
+                        </pre>
+
+                        </div>
+                        <div>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="2">
+                            <code data-trim contenteditable class="language-json">
+{
+  "data": {
+    "me": {
+      "firstName": "Mateusz",
+      "lastName": "Kapeluszny"
+    }
+  }
+}
+                            </code>
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="4">
+                            <code data-trim contenteditable class="language-graphql">
+type Query {
+  me: User
+  user(id: ID!): User
+}
+
+type User {
+  firstName: String!
+  lastName: String!
+}
+                            </code>
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="5">
+                            <code data-trim contenteditable class="language-graphql">
+type Query {
+  me: User
+  user(id: ID!): User
+}
+
+type User {
+  firstName: String!
+  lastName: String!
+}
+                            </code>
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="6">
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="7">
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="8">
+                            <code data-trim contenteditable class="language-graphql">
+type User {
+  firstName: String!
+  lastName: String!
+  age: Int!
+  friends: [User]!
+  company: Company!
+}
+
+type Company {
+  name: String!
+  department: String!
+}
+
+                            </code>
+                            </pre>
+
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="9">
+                            <code data-trim contenteditable class="language-json">
+{
+  "data": {
+    "me": {
+      "firstName": "Mateusz",
+      "lastName": "Kapeluszny",
+      "company": {
+        "name": "Billennium",
+        "department": "Frontend"
+      },
+      "friends": [
+        {
+          "name": "Marcin",
+          "age": 26
+        },
+        {
+          "name": "Piotr",
+          "age": 31
+        }
+      ]
+    }
+  }
+}
+                            </code>
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="10">
+                            <code data-trim contenteditable class="language-json">
+{
+  "data": {
+    "me": {
+      "firstName": "Mateusz",
+      "lastName": "Kapeluszny",
+      "company": {
+        "name": "Billennium",
+        "department": "Frontend"
+      },
+      "friends": [
+        {
+          "name": "Marcin",
+          "age": 26
+        }
+      ]
+    }
+  }
+}
+                            </code>
+                            </pre>
+
+
+                        </div>
+                    </div>
+
+                </section>
+
+                <section>
+                    <h2>How do we resolve query?</h2>
+                </section>
+
+                <section data-background-size="contain" data-background="assets/img/resolvers.png">
+                </section>
+
+                <section class="section">
+                    <h2>Scalar Types</h2>
+
+                    <div style="display: grid; grid-template-columns: 150px 100%">
+                        <div>
+                            <pre>
+                                <code data-trim contenteditable class="language-graphql">
+                                    Int
+                                    Float
+                                    String
+                                    Boolean
+                                    ID
+                                </code>
+                            </pre>
+                            <pre class="fragment fade-in" data-fragment-index="2">
+                                <code data-trim contenteditable class="language-graphql">
+                                        GraphQLJSON
+                                        Email
+                                        Phone
+                                        Date
+                                </code>
+                            </pre>
+                        </div>
+
+                        <div>
+                            <div style="display: grid; grid-template-columns: 50% 50%">
+                                <div>
+                                    <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="2">
+                                                    <code data-trim contenteditable class="language-graphql">
+type User {
+  id: ID
+  firstName: String
+  lastName: String
+  slug: String
+  isActive: Boolean
+  logs: JSON
+  email: Email
+  phoneNumber: Phone
+  createdAt: Date
+}
+                                                    </code>
+                                                </pre>
+
+                                    <pre class="fragment fade-in step-fade-in-then-out" data-fragment-index="3">
+                            <code data-trim contenteditable class="language-javascript">
+new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date custom scalar type',
+    parseValue(value) {
+      return new Date(value); // value from the client
+    },
+    serialize(value) {
+      return value.getTime(); // value sent to the client
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.INT) {
+        return new Date(ast.value) // ast value is always in string format
+      }
+      return null;
+    },
+  })
+          </code></pre>
+
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div>
+                </section>
+
+                <section class="section">
+                    <h2>Fragments</h2>
+
+                    <div style="text-align: center; display: grid; grid-template-columns: 60% 60%">
+                        <div class="fade-in">
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="1">
+                            <code data-trim contenteditable class="language-graphql">
+                                {
+                                  me {
+                                    firstName
+                                    lastName
+                                    phoneNumber
+                                    roles {
+                                      name
+                                      id
+                                    }
+                                  }
+                                  users {
+                                    firstName
+                                    lastName
+                                    phoneNumber
+                                  }
+                                }
+                            </code>
+                        </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="2">
+                            <code data-trim contenteditable class="language-graphql">
+                                {
+                                  me {
+                                    firstName
+                                    lastName
+                                    phoneNumber
+                                    roles {
+                                      name
+                                      id
+                                    }
+                                  }
+                                  users {
+                                    firstName
+                                    lastName
+                                    phoneNumber
+                                  }
+                                }
+                            </code>
+                        </pre>
+
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="3">
+                            <code data-trim contenteditable class="language-graphql">
+                                {
+                                  me {
+                                    ...UserBasicInformation
+                                    roles {
+                                      name
+                                      id
+                                    }
+                                  }
+                                  users {
+                                    ...UserBasicInformation
+                                  }
+                                }
+                            </code>
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="4">
+                            <code data-trim contenteditable class="language-graphql">
+                                #import "./UserBasicInformationFragment.graphql"
+                                #import "./UserCompanyDetailsFragment.graphql"
+
+                                {
+                                  me {
+                                    ...UserBasicInformation
+                                    ...UserCompanyDetails
+                                    roles {
+                                      name
+                                      id
+                                    }
+                                  }
+                                  users {
+                                    ...UserBasicInformation
+                                  }
+                                }
+                            </code>
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="5">
+                            <code data-trim contenteditable class="language-graphql">
+                                #import "./UserBasicInformationFragment.graphql"
+                                #import "./UserCompanyDetailsFragment.graphql"
+
+                                {
+                                  me {
+                                    ...UserBasicInformation
+                                    ...UserCompanyDetails
+                                    roles {
+                                      name
+                                      id
+                                    }
+                                  }
+                                  users {
+                                    ...UserBasicInformation
+                                  }
+                                }
+                            </code>
+                            </pre>
+
+                        </div>
+                        <div>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="2">
+                            <code data-trim contenteditable class="language-graphql">
+fragment UserBasicInformation on User {
+  firstName
+  lastName
+  phoneNumber
+}
+                            </code>
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="3">
+                            <code data-trim contenteditable class="language-graphql">
+fragment UserBasicInformation on User {
+  firstName
+  lastName
+  phoneNumber
+}
+                            </code>
+                            </pre>
+                            <pre class="fragment step-fade-in-then-out" data-fragment-index="4">
+                                                            <code data-trim contenteditable class="language-graphql">
+fragment UserBasicInformation on User {
+  firstName
+  lastName
+  phoneNumber
+}
+                            </code>
+                            <code data-trim contenteditable  class="language-graphql">
+fragment UserCompanyDetails on User {
+  company {
+    name
+    department
+  }
+}
+                            </code>
+                            </pre>
+
+                            <pre class="fragment" data-fragment-index="5">
+                            <code data-trim contenteditable  class="language-json">
+{
+  "data": {
+    "me": {
+      "firstName": "Mateusz",
+      "lastName": "Kapeluszny",
+      "phoneNumber": "(+48) 888-888-888",
+      "company": {
+        "name": "Billennium",
+        "department": "Frontend"
+      },
+      "roles": [
+        {
+          "name": "recruiter",
+          "id": "d930a19d-1f18-4869-9d4a-3be43f5d4d0d"
+        },
+        {
+          "name": "worker",
+          "id": "5722c535-3f22-405d-bb11-ee33276038c3"
+        }
+      ]
+    },
+    "users": [
+            ...
+    ]
+  }
+}
+                            </code>
+                            </pre>
+
+                        </div>
+                    </div>
+
+                </section>
+
+                <section class="section">
+                    <h2>Aliases</h2>
+
+                    <div style="display: grid; grid-template-columns: 50% 70%">
+                        <div>
+                        <pre>
+                            <code data-trim contenteditable class="language-graphql">
+query getUsers {
+  admins: users(role: ADMIN) {
+    id
+    firstName
+    lastName
+    phoneNumber
+  }
+  moderators: users(role: MODERATOR) {
+    id
+    firstName
+    lastName
+    phoneNumber
+  }
+}
+                            </code>
+                        </pre>
+                        </div>
+                        <div>
+                        <pre class="fragment">
+                            <code data-trim contenteditable class="language-graphql">
+query getRoles {
+  roles {
+    value: id
+    label: name
+  }
+}
+
+roles.map(role => ({ value: role.id, label: role.name }));
+                            </code>
+                        </pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Directives</h2>
+
+                    <div>
+                        <pre>
+                            <code data-trim contenteditable class="language-graphql">
+query getUser(id: ID!, $withFriends: Boolean!) {
+  user(id: $id) {
+    firstName
+    friends @include(if: $withFriends) {
+      firstName
+    }
+  }
+}
+
+query getUser(id: ID!, $modalOpen: Boolean!) {
+  user(id: $id) {
+    firstName
+    friends @skip(if: $modalOpen) {
+      firstName
+    }
+  }
+}
+                            </code>
+                        </pre>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Mutations</h2>
+
+                    <div style="display: grid; grid-template-columns: 65% 70%">
+                        <div>
+                            <div class="fragment">
+                        <pre>
+                            <code data-trim contenteditable class="language-graphql">
+type Mutation {
+  createUser(firstName: String!): User!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  createdAt: Date!
+  version: Int!
+}
+                            </code>
+                        </pre>
+                                <pre class="fragment">
+                            <code data-trim contenteditable class="language-javascript">
+// resolver
+{
+  Mutation: {
+    createUser: async (parent, args, { models }) => {
+      const userAdded = await models.User.create(args);
+
+      return userAdded;
+    }
+  }
+  // ...
+}
+                            </code>
+                        </pre>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="fragment">
+                                <pre><code data-trim contenteditable class="language-graphql">
+mutation {
+  createUser(firstName: "Mateusz") {
+    id
+    version
+    createdAt
+  }
+}
+          </code></pre>
+
+                                <pre><code data-trim contenteditable class="language-graphql">
+mutation createUser($firstName: String) {
+  createUser(firstName: $firstName) {
+    id
+    version
+    createdAt
+  }
+}
+                        </code>
+                    </pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Subscriptions</h2>
+
+                    <div style="display: grid; grid-template-columns: 50% 70%">
+                        <pre>
+                            <code data-trim contenteditable class="language-graphql">
+type Subscription {
+  userAdded: User!
+}
+
+type Mutation {
+  createUser(firstName: String!): User!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+}
+                            </code>
+                        </pre>
+                        <pre class="fragment">
+                            <code data-trim contenteditable class="language-javascript">
+// resolver
+{
+  Subscription: {
+    userAdded: {
+      subscribe: () => pubsub.asyncIterator(USER_ADDED),
+    },
+  },
+  Mutation: {
+    createUser: async (parent, args, { models }) => {
+      const userAdded = await models.User.create(args);
+      pubsub.publish(USER_ADDED, {
+        userAdded,
+      });
+
+      return userAdded;
+    }
+  }
+  // ...
+}
+                            </code>
+                        </pre>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Deferred Queries</h2>
+
+
+                        <div class="fragment step-fade-in-then-out" data-fragment-index="1">
+                            <div class="span2">
+                                <div>
+                            <pre>
+                                <code data-trim contenteditable class="language-graphql">
+    query Me {
+      me {
+        firstName
+        lastName
+        recommendedForMe {
+          story {
+            text
+            comments {
+              text
+            }
+            matchScore
+          }
+        }
+      }
+    }
+                                </code>
+                            </pre>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fragment step-fade-in-then-out" data-fragment-index="2">
+                            <div class="span2">
+                                <div>
+                            <pre>
+                                <code data-trim contenteditable class="language-graphql">
+    query Me {
+      me {
+        firstName
+        lastName
+        recommendedForMe {
+          story {
+            text
+            comments {
+              text
+            }
+            matchScore
+          }
+        }
+      }
+    }
+                                </code>
+                            </pre>
+                                </div>
+                                <div>
+                                <pre>
+                                    <code class="language-json">
+    // Typical response
+    {
+       "data":{
+          "me":{
+             "firstName":"Mateusz",
+             "lastName":"Kapeluszny",
+             "recommendedForMe":[
+                {
+                   "story":{
+                      "text":"Cool story bro",
+                      "comments":[
+                         {
+                            "text":"nice story brah"
+                         }
+                      ],
+                      "matchScore":"99"
+                   }
+                }
+             ]
+          }
+       }
+    }
+                                    </code>
+                                </pre>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="fragment step-fade-in-then-out" data-fragment-index="3">
+                        <div class="span2">
+                            <div>
+                            <pre>
+                                <code data-trim contenteditable class="language-graphql">
+    query Me {
+      me {
+        firstName
+        lastName
+        recommendedForMe @defer {
+          story {
+            text
+            comments @defer {
+              text
+            }
+            matchScore
+          }
+        }
+      }
+    }
+                                </code>
+                            </pre>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fragment step-fade-in-then-out" data-fragment-index="4">
+                        <div class="span2">
+                            <div>
+                            <pre>
+                                <code data-trim contenteditable class="language-graphql">
+    query Me {
+      me {
+        firstName
+        lastName
+        recommendedForMe @defer {
+          story {
+            text
+            comments @defer {
+              text
+            }
+            matchScore
+          }
+        }
+      }
+    }
+                                </code>
+                            </pre>
+                            </div>
+                            <div>
+                                <pre>
+                                    <code class="language-json">
+    // Initial response
+    {
+       "data":{
+          "me":{
+             "firstName":"Mateusz",
+             "lastName":"Kapeluszny",
+             "recommendedForMe": null
+          }
+       }
+    }
+                                    </code>
+
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fragment step-fade-in-then-out" data-fragment-index="5">
+                        <div class="span2">
+                            <div>
+                            <pre>
+                                <code data-trim contenteditable class="language-graphql">
+    query Me {
+      me {
+        firstName
+        lastName
+        recommendedForMe @defer {
+          story {
+            text
+            comments @defer {
+              text
+            }
+            matchScore
+          }
+        }
+      }
+    }
+                                </code>
+                            </pre>
+                            </div>
+                            <div>
+                                <pre>
+                                    <code class="language-json">
+
+// Patch for "recommendedForMe"
+{
+  "path": ["me", "recommendedForMe"],
+  "data": [
+    {
+      "story": {
+        "text": "...",
+        "comments": null
+      },
+      "matchScore": 99
+    }
+  ]
+}
+                                    </code>
+
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fragment step-fade-in-then-out" data-fragment-index="6">
+                        <div class="span2">
+                            <div>
+                            <pre>
+                                <code data-trim contenteditable class="language-graphql">
+    query Me {
+      me {
+        firstName
+        lastName
+        recommendedForMe @defer {
+          story {
+            text
+            comments @defer {
+              text
+            }
+            matchScore
+          }
+        }
+      }
+    }
+                                </code>
+                            </pre>
+                            </div>
+                            <div>
+                                <pre>
+                                    <code class="language-json">
+// Patch for story "comments"
+{
+  "path": ["me", "recommendedForMe", "story", "comments"],
+  "data": [
+    {
+      "text": "..."
+    }
+  ]
+}
+                                    </code>
+
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </section>
+
+
+                <section class="section">
+                    <h2>Introspection</h2>
+
+                    <div style="display: grid; grid-template-columns: 50% 70%">
+                        <div>
+                        <pre>
+                            <code data-trim contenteditable class="language-graphql">
+{
+  __schema {
+    types {
+      name
+    }
+  }
+}
+                            </code>
+                        </pre>
+                        </div>
+                        <div>
+                        <pre>
+                            <code data-trim contenteditable class="language-json">
+{
+  "data": {
+    "__schema": {
+      "types": [
+        { "name": "Query" },
+        { "name": "User" },
+        { "name": "Picture" },
+        { "name": "Post" },
+        { "name": "ID" },
+        { "name": "String" },
+        { "name": "Int" },
+        { "name": "Email" },
+        { "name": "Boolean" },
+        { "name": "Float" },
+        { "name": "Mutation" },
+        { "name": "__Schema" },
+        { "name": "__Type" },
+        { "name": "__TypeKind" }
+      ]
+    }
+  }
+}
+                            </code>
+                        </pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" data-background-size="contain" data-background="assets/img/introspection.gif">
+                </section>
+
+                <section>
+                    <h2>Security</h2>
+                </section>
+
+                <section>
+                    <div style="display: grid; grid-template-columns: 50% 70%">
+                        <div>
+<pre>
+    <code data-trim contenteditable class="language-graphql">
+query maliciousQuery {
+  post(id: "some-id") {
+    comments(first: 99999) {
+      post {
+        comments(first: 99999) {
+          post {
+            comments(first: 99999) {
+              post {
+                # ...repeat times 10000...
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    </code>
+</pre>
+                        </div>
+
+                        <div>
+<pre>
+    <code data-trim contenteditable class="language-graphql">
+type Post {
+  comments(first: Int, after: String): [Comment]
+}
+
+type Comment {
+  post: Post
+}
+
+type Query {
+  post(id: ID!): Post
+}
+    </code>
+</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Depth limit</h2>
+
+                    <div style="display: grid; grid-template-columns: 50% 50%">
+                        <div>
+<pre>
+    <code data-trim contenteditable class="language-graphql">
+query maliciousQuery {
+  post(id: "some-id") {
+    comments(first: 99999) {
+      post {
+        comments(first: 99999) {
+          post {
+            comments(first: 99999) {
+              post {
+                # ...repeat times 10000...
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    </code>
+</pre>
+                        </div>
+                        <div>
+                            <pre class="fragment">
+                                <code data-trim contenteditable class="language-javascript">
+app.use('/api', graphqlServer({
+  validationRules: [depthLimit(10)]
+}));
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Size limit</h2>
+
+                    <div style="display: grid; grid-template-columns: 50% 50%">
+                        <div>
+<pre>
+    <code data-trim contenteditable class="language-graphql">
+query maliciousQuery {
+  post(id: "some-id") {
+    comments(first: 99999) {
+      post {
+        comments(first: 99999) {
+          post {
+            comments(first: 99999) {
+              post {
+                # ...repeat times 10000...
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    </code>
+</pre>
+                        </div>
+                        <div>
+                            <pre class="fragment">
+                                <code data-trim contenteditable class="language-javascript">
+app.use('*', (req, res, next) => {
+  const query = req.query.query || req.body.query || '';
+  if (query.length > 2000) {
+    throw new Error('Query too large');
+  }
+  next();
+});
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Query Whitelisting</h2>
+
+                    <div style="display: grid; grid-template-columns: 50% 70%">
+                        <div>
+<pre>
+    <code data-trim contenteditable class="language-graphql">
+query maliciousQuery {
+  post(id: "some-id") {
+    comments(first: 99999) {
+      post {
+        comments(first: 99999) {
+          post {
+            comments(first: 99999) {
+              post {
+                # ...repeat times 10000...
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    </code>
+</pre>
+                        </div>
+                        <div>
+                            <pre class="fragment">
+                                <code data-trim contenteditable class="language-javascript">
+app.use('/api', graphqlServer((req, res) => {
+  const query = req.query.query || req.body.query;
+  // TODO: Get whitelist somehow
+  if (!whitelist[query]) {
+    throw new Error('Query is not in whitelist.');
+  }
+  /* ... */
+}));
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Amount Limiting</h2>
+
+                    <div style="display: grid; grid-template-columns: 50% 70%">
+                        <div>
+<pre>
+    <code data-trim contenteditable class="language-graphql">
+query maliciousQuery {
+  post(id: "some-id") {
+    comments(first: 99999) {
+      post {
+        comments(first: 99999) {
+          post {
+            comments(first: 99999) {
+              post {
+                # ...repeat times 10000...
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    </code>
+</pre>
+                        </div>
+                        <div>
+                            <pre class="fragment">
+                                <code data-trim contenteditable class="language-javascript">
+const PaginationAmount = GraphQLInputInt({
+  name: 'PaginationAmount',
+  min: 1,
+  max: 100,
+});
+                                </code>
+<code data-trim contenteditable class="language-graphql">
+type Post {
+  comments(first: PaginationAmount, after: String): [Comment]
+}
+</code>
+                            </pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Query Cost Analysis</h2>
+
+                    <div style="width: 140%;">
+                        <div>
+<pre>
+    <code data-trim contenteditable class="language-graphql">
+query maliciousQuery {
+  post(id: "some-id") {
+    comments(first: 99999) {
+      post {
+        comments(first: 99999) {
+          post {
+            comments(first: 99999) {
+              post {
+                # ...repeat times 10000...
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    </code>
+</pre>
+                        </div>
+                        <div>
+                            <pre class="fragment">
+                                <code data-trim contenteditable class="language-graphql">
+
+type Post {
+  author: Author @cost(complexity: 1)
+  comments(first: PaginationAmount, after: String): [Comment] @cost(complexity: 2, multipliers: ["first"])
+}
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Big Players</h2>
+                    <div style="padding: 150px 0;display: grid;grid-template-columns: 20% 20% 20%;height: 100%;grid-column-gap: 20%;">
+                        <div>
+                            <div class="fragment step-fade-in-then-out" data-fragment-index="1">
+                                <div>
+                                    <svg stroke="none" fill="rgba(39,174,96,1)" viewBox="0 0 50 50">
+                                        <path d="M38.87,18.81c-1.77-1-4,0.3-4.35,0.53l-7.65,4.35c-1.29-1.03-3.17-0.81-4.19,0.48
+    c-1.03,1.29-0.81,3.18,0.48,4.2c1.29,1.03,3.17,0.81,4.19-0.48c0.53-0.67,0.75-1.54,0.6-2.38l7.63-4.34l0.05-0.03
+    c0.5-0.32,1.66-0.79,2.21-0.48c0.39,0.22,0.62,0.96,0.63,2.05h-0.01v9.59c0,0.89-0.48,1.72-1.25,2.17L26.25,40.8
+    c-0.77,0.45-1.72,0.45-2.5,0l-10.96-6.35c-0.77-0.45-1.25-1.27-1.25-2.17V19.6c0-0.89,0.48-1.72,1.25-2.17l9.92-5.74
+    c1.08,1.24,2.97,1.37,4.21,0.29c1.24-1.08,1.37-2.97,0.29-4.22C26.12,6.53,24.24,6.4,23,7.48c-0.64,0.55-1.01,1.35-1.02,2.2
+    L11.74,15.6c-1.43,0.83-2.31,2.35-2.31,4v12.68c0,1.65,0.88,3.18,2.3,4l10.96,6.35c1.43,0.82,3.18,0.82,4.61,0l10.96-6.35
+    c1.42-0.83,2.3-2.35,2.3-4v-9.22h0.01C40.63,20.91,40.05,19.47,38.87,18.81"></path>
+                                    </svg>
+                                </div>
+                                <div style="color: rgba(39,174,96,1); margin-top: 40px; font-size: 38px; font-weight: 800;">
+                                    Graphcool
+                                </div>
+                            </div>
+                            <div class="fragment step-fade-in-then-out" data-fragment-index="2">
+                                <img style="max-height: 160px;" src="assets/img/prisma.png">
+                                <div style="color: #112B49; margin-top: 40px; font-size: 38px; font-weight: 800;">
+                                    Prisma
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="fragment step-fade-in-then-out" data-fragment-index="1">
+                                <img style="max-height: 160px;" src="assets/svg/apollo.svg" alt="">
+                                <div style="color: #112B49; margin-top: 40px; font-size: 38px; font-weight: 800;">
+                                    Apollo
+                                </div>
+                            </div>
+                            <div class="fragment step-fade-in-then-out" data-fragment-index="2">
+                                <img style="max-height: 160px;" src="assets/svg/apollo.svg" alt="">
+                                <div style="color: #112B49; margin-top: 40px; font-size: 38px; font-weight: 800;">
+                                    Apollo
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="fragment step-fade-in-then-out" data-fragment-index="1">
+                                <img style="max-height: 160px;" src="assets/svg/relay.svg" alt="">
+                                <div style="color: #f26b00; margin-top: 40px; font-size: 38px; font-weight: 800;">
+                                    Relay
+                                </div>
+                            </div>
+                            <div class="fragment step-fade-in-then-out" data-fragment-index="2">
+                                <img style="max-height: 160px;" src="assets/svg/relay.svg" alt="">
+                                <div style="color: #f26b00; margin-top: 40px; font-size: 38px; font-weight: 800;">
+                                    Relay
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#384359" class="first-slide">
+                    <h1>Thank you!</h1>
+                    <br>
+                    <ul class="fragment roll-in" data-fragment-index="2">
+                        <li><a href="https://github.com/loelsonk" target="_blank">https://github.com/loelsonk</a></li>
+                        <li><strong>GraphQL:</strong> <a href="http://graphql.org" target="_blank">http://graphql.org</a></li>
+                        <li><strong>Zero To GraphQL:</strong> <a href="http://bit.ly/zero-to-graphql" target="_blank">http://bit.ly/zero-to-graphql</a></li>
+                        <li><strong>How To GraphQL</strong> <a href="https://www.howtographql.com/" target="_blank">https://www.howtographql.com/</a></li>
+                        <li><strong>GitHub graphql api</strong> <a href="https://developer.github.com/v4/explorer/" target="_blank">https://developer.github.com/v4/explorer</a></li>
+                    </ul>
+                    <br><br>
+                    <h2 class="fragment roll-in" data-fragment-index="3" style="opacity: 0.7;">Questions?</h2>
+                </section>
+
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() {
+                    //     hljs.initHighlightingOnLoad();
+                    // } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+        </script>
+    </body>
+</html>

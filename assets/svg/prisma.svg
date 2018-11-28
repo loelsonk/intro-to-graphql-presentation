@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="32">
+  <use fill="#27AE60" xlink:href="#side1"/>
+  <use fill="#A4E5AD" transform="translate(13.733)" xlink:href="#side2"/>
+  <defs>
+    <path id="side1" fill-rule="evenodd" d="M27.32 22.85L14.317.329a.657.657 0 0 0-1.138 0L.176 22.849a1.315 1.315 0 0 0 .481 1.796l12.434 7.179c.407.235.908.235 1.314 0l12.434-7.179a1.315 1.315 0 0 0 .48-1.795z"/>
+    <path id="side2" d="M0 32V0A.652.652 0 0 1 .584.33l13.003 22.52a1.315 1.315 0 0 1-.482 1.796L.672 31.824c-.208.12-.44.178-.672.176z"/>
+  </defs>
+</svg>
